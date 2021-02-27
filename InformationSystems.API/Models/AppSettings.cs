@@ -1,4 +1,4 @@
-namespace InformationSystems.API.Helpers
+namespace InformationSystems.API.Models
 {
     public class AppSettings
     {

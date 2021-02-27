@@ -1,0 +1,40 @@
+version: "3.6"
+
+#must create docker volume with name set in .env
+volumes:
+  sqlsrv:
+
+services:
+  sql-server-db:
+    image: mcr.microsoft.com/mssql/server:2019-CU8-ubuntu-16.04
+    container_name: informatics_sqlsrv
+    hostname: sqlserver
+    network_mode: ${NETWORKMODE}
+    volumes:
+      - sqlsrv:/var/opt/mssql
+    expose:
+      - "1433"
+    ports:
+      - "1434:1433"
+    environment:
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      MSSQL_PID: Developer
+      ACCEPT_EULA: "Y"
+      
+  informationssystemsapi:
+    image: informationssystemsapi:latest
+    build:
+      context: .
+      dockerfile: InformationSystems.API/Dockerfile
+      network: host
+    container_name: informatics_api
+    hostname: api
+    depends_on:
+      - sql-server-db
+    ports:
+      - "8098:80"
+      - "8099:443"
+    expose:
+      - "80"
+      - "443"
+    network_mode: ${NETWORKMODE}

@@ -3,12 +3,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InformationSystems.API.Models;
 using InformationSystems.API.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace InformationSystems.API.Helpers
+namespace InformationSystems.API.Middleware
 {
     public class JwtMiddleware
     {
@@ -21,17 +22,17 @@ namespace InformationSystems.API.Helpers
             _appSettings = appSettings.Value;
         }
 
-        public async Task Invoke(HttpContext context, IUserService userService)
+        public async Task Invoke(HttpContext context, IAuthenticationService authenticationService)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
             if (token != null)
-                attachUserToContext(context, userService, token);
+                AttachCompanyToContext(context, authenticationService, token);
 
             await _next(context);
         }
 
-        private void attachUserToContext(HttpContext context, IUserService userService, string token)
+        private void AttachCompanyToContext(HttpContext context, IAuthenticationService authenticationService, string token)
         {
             try
             {
@@ -48,10 +49,10 @@ namespace InformationSystems.API.Helpers
                 }, out SecurityToken validatedToken);
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
-                var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
+                var companyId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
 
                 // attach user to context on successful jwt validation
-                context.Items["User"] = userService.GetById(userId);
+                context.Items["Company"] = authenticationService.GetById(companyId);
             }
             catch
             {

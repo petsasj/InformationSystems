@@ -1,72 +1,68 @@
 using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using InformationSystems.API.Entities;
-using InformationSystems.API.Helpers;
+using System.Threading.Tasks;
+using DevExpress.Xpo;
 using InformationSystems.API.Models;
+using InformationSystems.API.Models.ViewModels;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace InformationSystems.API.Services
 {
-    public interface IUserService
+    public interface IAuthenticationService
     {
-        AuthenticateResponse Authenticate(AuthenticateRequest model);
-        IEnumerable<User> GetAll();
-        User GetById(int id);
+        Task<AuthenticateResponse> Authenticate(AuthenticateRequest model);
+        PocoCompany GetById(long internalId);
     }
 
-    public class UserService : IUserService
+    public class AuthenticationService : IAuthenticationService
     {
-        // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private List<User> _users = new List<User>
-        {
-            new User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
-        };
-
         private readonly AppSettings _appSettings;
+        private readonly UnitOfWork _unitOfWork;
 
-        public UserService(IOptions<AppSettings> appSettings)
+        public AuthenticationService(IOptions<AppSettings> appSettings,
+            UnitOfWork unitOfWork)
         {
-            _appSettings = appSettings.Value;
+            this._appSettings = appSettings.Value;
+            this._unitOfWork = unitOfWork;
         }
 
-        public AuthenticateResponse Authenticate(AuthenticateRequest model)
+        public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model)
         {
-            var user = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+            var company = await _unitOfWork.Query<Company>()
+                .SingleOrDefaultAsync(c => c.VatNormalized == model.VAT.ToLower());
 
-            // return null if user not found
-            if (user == null) return null;
+            // Company was not found, or invalid password
+            if (company == null || !company.VerifyPassword(model.Password))
+                return null;
 
             // authentication successful so generate jwt token
-            var token = generateJwtToken(user);
+            var token = GenerateJwtToken(company);
 
-            return new AuthenticateResponse(user, token);
+            return new AuthenticateResponse(company, token);
         }
 
-        public IEnumerable<User> GetAll()
+        public PocoCompany GetById(long internalId)
         {
-            return _users;
-        }
-
-        public User GetById(int id)
-        {
-            return _users.FirstOrDefault(x => x.Id == id);
+            return _unitOfWork.Query<Company>()
+                .Where(c => c.InternalId == internalId)
+                .Select(c => new PocoCompany(c))
+                .SingleOrDefault();
         }
 
         // helper methods
 
-        private string generateJwtToken(User user)
+        private string GenerateJwtToken(Company company)
         {
             // generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
+                Subject = new ClaimsIdentity(new[] { new Claim("id", company.Oid.ToString()) }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

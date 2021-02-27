@@ -1,4 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<visualDesignerDiagram dslVersion="1.0.0.0" Id="3a8a1157-2370-460f-89f2-d78707562a23" absoluteBounds="0, 0, 11, 8.5" name="Model">
-  <dataBaseObjectModelMoniker Id="7686c55e-6353-41b5-ab6a-e4db14d5cdab" />
+<visualDesignerDiagram dslVersion="1.0.0.0" Id="83918601-0efa-48d8-92a9-da2720f699d1" absoluteBounds="0, 0, 16.375, 8.5" name="Model">
+  <dataBaseObjectModelMoniker Id="10f930c5-a240-4dc6-b34e-1ada8f7eeff7" />
+  <nestedChildShapes>
+    <xpObjectShape Id="c9c413e0-c57b-46e2-826e-8feb6abe3ed6" absoluteBounds="7.875, 3.625, 4, 3.8703889973958319">
+      <xpObjectMoniker Id="77b15de8-08a9-49c5-9833-129c3c94e16d" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bc9c91f7-a4f5-4995-9338-423a91c95ab4" absoluteBounds="7.89, 3.935, 3.9699999999999998, 2.7493082682291665" name="Fields" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="c59add7a-d309-4305-8ca4-9dd8832cfcfc" absoluteBounds="7.89, 6.6943082682291664, 3.9699999999999998, 0.2493896484375" name="Indexes" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="49a98d83-6824-4c05-a7ab-f8352de78229" absoluteBounds="7.89, 6.9536979166666661, 3.9699999999999998, 0.44169108072916663" name="Collections" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </xpObjectShape>
+    <xpObjectShape Id="9f265cc3-7055-4fc2-8848-a4b9e3db3fab" absoluteBounds="1, 3.25, 3.9583333333333339, 2.7165804036458319">
+      <xpObjectMoniker Id="04cd6019-5cfc-4eff-b0be-cb5dabbe6c1a" />
+      <nestedChildShapes>
+        <elementListCompartment Id="236edfdf-45bd-46d9-a2b4-3bb12b22ea6c" absoluteBounds="1.0150000000000001, 3.56, 3.9283333333333337, 1.7878011067708333" name="Fields" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="0bdc3e54-e3b6-477d-a05c-72a346164580" absoluteBounds="1.015, 5.3578011067708324, 3.9283333333333337, 0.2493896484375" name="Indexes" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="141b4948-f704-42b8-9e5f-0eb96abf845c" absoluteBounds="1.015, 5.6171907552083322, 3.9283333333333337, 0.2493896484375" name="Collections" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </xpObjectShape>
+    <simpleAssociationConnector Id="6e4b7b88-31c3-43d0-a6a6-6e1f14e2e347" edgePoints="[(7.875 : 4.79579020182292); (4.95833333333333 : 4.79579020182292)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <simpleAssociationMoniker Id="24b06692-ba81-4b8d-b32d-dce06e800838" />
+      <relativeChildShapes />
+      <nodes>
+        <xpObjectShapeMoniker Id="c9c413e0-c57b-46e2-826e-8feb6abe3ed6" />
+        <xpObjectShapeMoniker Id="9f265cc3-7055-4fc2-8848-a4b9e3db3fab" />
+      </nodes>
+      <sourceCollectionField>
+        <associationConnectorReferencesSourceCollectionField Id="f58340ab-1ee2-42b5-a7c1-58a14e7ad93b">
+          <collectionFieldMoniker Id="deaef20a-cc14-46d4-bdf7-f3574d788b71" />
+        </associationConnectorReferencesSourceCollectionField>
+      </sourceCollectionField>
+    </simpleAssociationConnector>
+    <xpObjectShape Id="dc4eede4-9957-4c18-a5dd-fa74ba434d39" absoluteBounds="14.635416984558106, 3.8958332538604736, 1.5, 2.1396761067708328">
+      <xpObjectMoniker Id="d00a45f0-9603-4c40-98d0-b5e64f95fcf9" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8bd6a41d-ef2a-49df-a876-0442e8da0f9e" absoluteBounds="14.650416984558106, 4.2058332538604732, 1.4700000000000002, 1.2108968098958333" name="Fields" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="4f590c8e-ea56-44b0-9189-ea8eb102ab22" absoluteBounds="14.650416984558106, 5.426730063756307, 1.4700000000000002, 0.2493896484375" name="Indexes" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="7ced9cff-aa6d-436a-a108-4c7ba4e75dae" absoluteBounds="14.650416984558106, 5.6861197121938067, 1.4700000000000002, 0.2493896484375" name="Collections" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </xpObjectShape>
+  </nestedChildShapes>
 </visualDesignerDiagram>
