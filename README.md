@@ -19,15 +19,11 @@ There are no extra requirements, other than the Docker-Engine
 OS X & Linux:
 
 ```sh
-git clone https://github.com/petsasj/FIWAREHub.git
+git clone https://github.com/petsasj/InformationSystems.git
 ```
 
 Windows:
 Download repository via Github and unzip.
-
-Download the Dataset files and place the archives in the FIWAREHub.Datasets folder.  
-[Weather Dataset](https://drive.google.com/file/d/103v-GEh8QJS9pvsWb5d9xECDsSbWcTkM/view?usp=sharing)  
-[Accidents Dataset](https://drive.google.com/file/d/1T7HHim2xZnBN2-pEHqplzya2VOf1BQR-/view?usp=sharing)
 
 Open terminal/console targetting the root folder. 
 
@@ -52,12 +48,6 @@ To get started, after cloning the git repository do the following:
 
 Any measurement posted in either of the JSON Devices or UltraLight Devices will be synchronized both into Microsoft SQL Server and Apache-Superset.
 
-In order to access Apache-Superset:
-* Run docker-compose exec superset superset-init
-* Create a new user
-* Add datasources (both Database and Tables)
-* Visit {localhost}:8088.
-* Import Dashboards from the corresponding folder.
 
 ## POSTMAN Collections
 
@@ -90,11 +80,11 @@ Yiannis Petsas - el05628@mail.ntua.gr
 
  Distributed under the GPL license. See ``LICENSE`` for more information.
 
-[https://github.com/petsasj/FIWAREHub](https://github.com/petsasj/)
+[https://github.com/petsasj/InformationSystems](https://github.com/petsasj/)
 
 ## Contributing
 
-1. Fork it (<https://github.com/petsasj/FIWAREHub/fork>)
+1. Fork it (<https://github.com/petsasj/InformationSystems/fork>)
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
