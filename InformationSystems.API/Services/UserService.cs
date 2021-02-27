@@ -33,7 +33,7 @@ namespace InformationSystems.API.Services
         public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model)
         {
             var company = await _unitOfWork.Query<Company>()
-                .SingleOrDefaultAsync(c => c.VatNormalized == model.VAT.ToLower());
+                .SingleOrDefaultAsync(c => c.Vat.ToLower() == model.VAT.ToLower());
 
             // Company was not found, or invalid password
             if (company == null || !company.VerifyPassword(model.Password))
@@ -62,7 +62,7 @@ namespace InformationSystems.API.Services
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", company.Oid.ToString()) }),
+                Subject = new ClaimsIdentity(new[] { new Claim("id", company.InternalId.ToString()) }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

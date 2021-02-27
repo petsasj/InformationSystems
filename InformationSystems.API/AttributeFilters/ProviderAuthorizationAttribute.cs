@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Mvc.Filters;
 namespace InformationSystems.API.AttributeFilters
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class ProviderAttribute : Attribute, IAuthorizationFilter
+    public class ProviderAuthorizationAttribute : Attribute, IAuthorizationFilter
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var company = (PocoCompany)context.HttpContext.Items["Company"];
+            var company = context.HttpContext.Items["Company"] as PocoCompany;
             if (company == null || !company?.IsProvider == true)
             {
                 // not logged in

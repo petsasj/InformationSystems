@@ -61,11 +61,11 @@ namespace InformationSystems.API
             get { return fConflictCallbackUrl; }
             set { SetPropertyValue<string>(nameof(ConflictCallbackUrl), ref fConflictCallbackUrl, value); }
         }
-        bool fConflictNotification;
-        public bool ConflictNotification
+        bool fReceiveConflictNotification;
+        public bool ReceiveConflictNotification
         {
-            get { return fConflictNotification; }
-            set { SetPropertyValue<bool>(nameof(ConflictNotification), ref fConflictNotification, value); }
+            get { return fReceiveConflictNotification; }
+            set { SetPropertyValue<bool>(nameof(ReceiveConflictNotification), ref fReceiveConflictNotification, value); }
         }
         string fPasswordHash;
         public string PasswordHash
@@ -99,6 +99,8 @@ namespace InformationSystems.API
         }
         [Association(@"InfrastructureModificationRequestReferencesCompany")]
         public XPCollection<InfrastructureModificationRequest> InfrastructureModificationRequests { get { return GetCollection<InfrastructureModificationRequest>(nameof(InfrastructureModificationRequests)); } }
+        [Association(@"InfrastructureReferencesCompany"), Aggregated]
+        public XPCollection<Infrastructure> Infrastructures { get { return GetCollection<Infrastructure>(nameof(Infrastructures)); } }
     }
 
 }

@@ -18,18 +18,11 @@ namespace InformationSystems.API
 
     public partial class InfrastructureModificationRequest : XPObject
     {
-        int fInternalId;
-        public int InternalId
+        Guid fUniqueId;
+        public Guid UniqueId
         {
-            get { return fInternalId; }
-            set { SetPropertyValue<int>(nameof(InternalId), ref fInternalId, value); }
-        }
-        string fCallbackUrl;
-        [Size(SizeAttribute.Unlimited)]
-        public string CallbackUrl
-        {
-            get { return fCallbackUrl; }
-            set { SetPropertyValue<string>(nameof(CallbackUrl), ref fCallbackUrl, value); }
+            get { return fUniqueId; }
+            set { SetPropertyValue<Guid>(nameof(UniqueId), ref fUniqueId, value); }
         }
         Company fCompany;
         [Association(@"InfrastructureModificationRequestReferencesCompany")]
@@ -38,23 +31,54 @@ namespace InformationSystems.API
             get { return fCompany; }
             set { SetPropertyValue<Company>(nameof(Company), ref fCompany, value); }
         }
+        int fInternalId;
+        public int InternalId
+        {
+            get { return fInternalId; }
+            set { SetPropertyValue<int>(nameof(InternalId), ref fInternalId, value); }
+        }
+        bool fSubmitSuccess;
+        public bool SubmitSuccess
+        {
+            get { return fSubmitSuccess; }
+            set { SetPropertyValue<bool>(nameof(SubmitSuccess), ref fSubmitSuccess, value); }
+        }
+        string fCallbackUrl;
+        [Size(SizeAttribute.Unlimited)]
+        public string CallbackUrl
+        {
+            get { return fCallbackUrl; }
+            set { SetPropertyValue<string>(nameof(CallbackUrl), ref fCallbackUrl, value); }
+        }
         DateTime fDateCreated;
         public DateTime DateCreated
         {
             get { return fDateCreated; }
             set { SetPropertyValue<DateTime>(nameof(DateCreated), ref fDateCreated, value); }
         }
-        DateTime fDateResponded;
-        public DateTime DateResponded
+        DateTime fDateInitialResponse;
+        public DateTime DateInitialResponse
         {
-            get { return fDateResponded; }
-            set { SetPropertyValue<DateTime>(nameof(DateResponded), ref fDateResponded, value); }
+            get { return fDateInitialResponse; }
+            set { SetPropertyValue<DateTime>(nameof(DateInitialResponse), ref fDateInitialResponse, value); }
         }
-        bool fSuccess;
-        public bool Success
+        DateTime? fDateValidated;
+        public DateTime? DateValidated
         {
-            get { return fSuccess; }
-            set { SetPropertyValue<bool>(nameof(Success), ref fSuccess, value); }
+            get { return fDateValidated; }
+            set { SetPropertyValue<DateTime?>(nameof(DateValidated), ref fDateValidated, value); }
+        }
+        DateTime? fDateFinalized;
+        public DateTime? DateFinalized
+        {
+            get { return fDateFinalized; }
+            set { SetPropertyValue<DateTime?>(nameof(DateFinalized), ref fDateFinalized, value); }
+        }
+        DateTime? fDateNotified;
+        public DateTime? DateNotified
+        {
+            get { return fDateNotified; }
+            set { SetPropertyValue<DateTime?>(nameof(DateNotified), ref fDateNotified, value); }
         }
         string fInitialResponse;
         [Size(SizeAttribute.Unlimited)]
@@ -63,13 +87,52 @@ namespace InformationSystems.API
             get { return fInitialResponse; }
             set { SetPropertyValue<string>(nameof(InitialResponse), ref fInitialResponse, value); }
         }
-        string fOriginalGeoJson;
+        string fOriginalRequest;
         [Size(SizeAttribute.Unlimited)]
-        public string OriginalGeoJson
+        public string OriginalRequest
         {
-            get { return fOriginalGeoJson; }
-            set { SetPropertyValue<string>(nameof(OriginalGeoJson), ref fOriginalGeoJson, value); }
+            get { return fOriginalRequest; }
+            set { SetPropertyValue<string>(nameof(OriginalRequest), ref fOriginalRequest, value); }
         }
+        string fRequestType;
+        public string RequestType
+        {
+            get { return fRequestType; }
+            set { SetPropertyValue<string>(nameof(RequestType), ref fRequestType, value); }
+        }
+        bool? fApproved;
+        public bool? Approved
+        {
+            get { return fApproved; }
+            set { SetPropertyValue<bool?>(nameof(Approved), ref fApproved, value); }
+        }
+        string fRejectionReason;
+        [Size(SizeAttribute.Unlimited)]
+        public string RejectionReason
+        {
+            get { return fRejectionReason; }
+            set { SetPropertyValue<string>(nameof(RejectionReason), ref fRejectionReason, value); }
+        }
+        bool? fHasValidationConflicts;
+        public bool? HasValidationConflicts
+        {
+            get { return fHasValidationConflicts; }
+            set { SetPropertyValue<bool?>(nameof(HasValidationConflicts), ref fHasValidationConflicts, value); }
+        }
+        bool? fProviderConflictNotified;
+        public bool? ProviderConflictNotified
+        {
+            get { return fProviderConflictNotified; }
+            set { SetPropertyValue<bool?>(nameof(ProviderConflictNotified), ref fProviderConflictNotified, value); }
+        }
+        string fInfrastructureType;
+        public string InfrastructureType
+        {
+            get { return fInfrastructureType; }
+            set { SetPropertyValue<string>(nameof(InfrastructureType), ref fInfrastructureType, value); }
+        }
+        [Association(@"InfrastructureReferencesInfrastructureModificationRequest")]
+        public XPCollection<Infrastructure> Infrastructures { get { return GetCollection<Infrastructure>(nameof(Infrastructures)); } }
     }
 
 }

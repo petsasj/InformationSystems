@@ -49,15 +49,17 @@ namespace InformationSystems.API.Middleware
                 }, out SecurityToken validatedToken);
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
-                var companyId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
+                var companyId = long.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
 
-                // attach user to context on successful jwt validation
+                // attach company to context on successful jwt validation
                 context.Items["Company"] = authenticationService.GetById(companyId);
             }
             catch
             {
                 // do nothing if jwt validation fails
-                // user is not attached to context so request won't have access to secure routes
+                // company is not attached to context so request won't have access to secure routes
+                // TODO Add logging
+
             }
         }
     }

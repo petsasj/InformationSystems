@@ -24,9 +24,9 @@ namespace InformationSystems.API
 
         public bool VerifyPassword(string password)
         {
-            var cryptoservice = new SimpleCrypto.PBKDF2();
-            var pashwordHash = new SimpleCrypto.PBKDF2().Compute(password, this.PasswordSalt);
-            var verificationResult = (pashwordHash == this.PasswordHash);
+            var cryptoService = new SimpleCrypto.PBKDF2();
+            var passwordHash = cryptoService.Compute(password, this.PasswordSalt);
+            var verificationResult = (passwordHash == this.PasswordHash);
             return verificationResult;
         }
 

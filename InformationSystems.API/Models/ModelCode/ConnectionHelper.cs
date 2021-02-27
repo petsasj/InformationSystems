@@ -21,7 +21,9 @@ namespace InformationSystems.API
         static Type[] persistentTypes = new Type[] {
             typeof(Company),
             typeof(InfrastructureModificationRequest),
-            typeof(JobsLog)
+            typeof(JobsLog),
+            typeof(Infrastructure),
+            typeof(GeoLocation)
         };
         public static Type[] GetPersistentTypes()
         {

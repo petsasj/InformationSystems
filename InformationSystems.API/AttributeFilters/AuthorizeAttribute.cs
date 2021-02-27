@@ -11,7 +11,7 @@ namespace InformationSystems.API.AttributeFilters
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var company = (PocoCompany)context.HttpContext.Items["Company"];
+            var company = context.HttpContext.Items["Company"] as PocoCompany;
             if (company == null)
             {
                 // not logged in

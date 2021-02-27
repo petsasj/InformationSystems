@@ -29,7 +29,9 @@ namespace InformationSystems.API
             dictionary.GetDataStoreSchema(new Type[] {
                 typeof(Company),
                 typeof(InfrastructureModificationRequest),
-                typeof(JobsLog)
+                typeof(JobsLog),
+                typeof(Infrastructure),
+                typeof(GeoLocation)
             });
         }
 

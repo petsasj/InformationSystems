@@ -1,4 +1,5 @@
-﻿using InformationSystems.API.Models;
+﻿using System.Threading.Tasks;
+using InformationSystems.API.Models;
 using InformationSystems.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,9 +17,9 @@ namespace InformationSystems.API.Controllers
         }
 
         [HttpPost("authenticate")]
-        public IActionResult Authenticate(AuthenticateRequest model)
+        public async Task<IActionResult> Authenticate(AuthenticateRequest model)
         {
-            var response = _authenticationService.Authenticate(model);
+            var response = await _authenticationService.Authenticate(model);
 
             if (response == null)
                 return BadRequest(new { message = "VAT or password is incorrect" });
