@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Cronos" Version="0.7.0" />
     <PackageReference Include="DevExpress.Xpo" Version="20.2.5" />
     <PackageReference Include="GeoJSON.Net" Version="1.2.19" />
     <PackageReference Include="IdGen" Version="3.0.0" />

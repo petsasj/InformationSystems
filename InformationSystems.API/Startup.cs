@@ -62,6 +62,19 @@ namespace InformationSystems.API
             // configure DI for application services
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
+            services.AddCronJob<NotificationCronJob>(c =>
+            {
+                c.TimeZoneInfo = TimeZoneInfo.Local;
+                c.CronExpression = @"*/10 * * * *";
+            });
+
+            // MyCronJob2 calls the scoped service MyScopedService
+            services.AddCronJob<ModificationRequestCronJob>(c =>
+            {
+                c.TimeZoneInfo = TimeZoneInfo.Local;
+                c.CronExpression = @"* * * * *";
+            });
+
             services.AddControllers().AddNewtonsoftJson();
         }
 
