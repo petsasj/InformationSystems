@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
-namespace InformationSystems.API
+namespace InformationSystems.API.Models
 {
     public static class ConnectionHelper
     {

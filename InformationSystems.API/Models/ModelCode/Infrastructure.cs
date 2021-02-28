@@ -5,7 +5,7 @@ using DevExpress.Data.Filtering;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
-namespace InformationSystems.API
+namespace InformationSystems.API.Models
 {
 
     public partial class Infrastructure
@@ -15,5 +15,4 @@ namespace InformationSystems.API
 
         public bool IsApproved => this.ModificationRequest.Approved ?? false;
     }
-
 }

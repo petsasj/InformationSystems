@@ -13,8 +13,8 @@ using DevExpress.Data.Filtering;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
-using InformationSystems.API;
-namespace InformationSystems.API
+using InformationSystems.API.Models;
+namespace InformationSystems.API.Models
 {
     public class TelecommunicationInfrastructureJsonSerializationContractResolver : Newtonsoft.Json.Serialization.DefaultContractResolver
     {

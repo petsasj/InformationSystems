@@ -14,8 +14,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
-using InformationSystems.API;
-namespace InformationSystems.API
+using InformationSystems.API.Models;
+namespace InformationSystems.API.Models
 {
     public partial class TelecommunicationInfrastructureUnitOfWork : UnitOfWork
     {

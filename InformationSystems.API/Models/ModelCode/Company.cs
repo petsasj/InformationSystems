@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Reflection;
 using IdGen;
 
-namespace InformationSystems.API
+namespace InformationSystems.API.Models
 {
     public partial class Company
     {
@@ -15,7 +15,7 @@ namespace InformationSystems.API
 
         public override void AfterConstruction()
         {
-            base.AfterConstruction(); 
+            base.AfterConstruction();
             DateCreated = DateTime.UtcNow;
             this.InternalId = new IdGenerator(0).CreateId();
         }
