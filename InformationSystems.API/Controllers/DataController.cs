@@ -26,6 +26,14 @@ namespace InformationSystems.API.Controllers
             this._unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        /// Used for querying of data from other public services
+        /// Or other providers
+        /// Must be authorized via JWT
+        /// </summary>
+        /// <param name="providerVat"></param>
+        /// <param name="infrastructureType"></param>
+        /// <returns></returns>
         [Route("getdata")]
         [Authorize]
         [HttpGet]
@@ -57,28 +65,40 @@ namespace InformationSystems.API.Controllers
                         .Where(i => i.InfrastructureType.ToLower() == infrastructureType.ToLower());
                 }
 
-                foreach (var infrastructure in infrastructures)
+                if (infrastructures.Any())
                 {
-                    var pocoInfrastructure = new PocoInfrastructure()
+                    foreach (var infrastructure in infrastructures)
                     {
-                        InfrastructureType = infrastructure.InfrastructureType,
-                        GeoLocations = infrastructure.GeoLocations.Select(i => new PocoGeoLocation
+                        var pocoInfrastructure = new PocoInfrastructure()
                         {
-                            Altitude = i.Altitude,
-                            Latitude = i.Latitude,
-                            Longitude = i.Longitude
-                        }).ToList()
-                    };
+                            InfrastructureType = infrastructure.InfrastructureType,
+                            GeoLocations = infrastructure.GeoLocations.Select(i => new PocoGeoLocation
+                            {
+                                Altitude = i.Altitude,
+                                Latitude = i.Latitude,
+                                Longitude = i.Longitude
+                            }).ToList()
+                        };
 
-                    queryResult.Infrastructures.Add(pocoInfrastructure);
+                        queryResult.Infrastructures.Add(pocoInfrastructure);
+                    }
+                    results.Results.Add(queryResult);
                 }
-                results.Results.Add(queryResult);
             }
+
+            if (!results.Results.Any())
+                return NoContent();
 
             return Ok(results);
         }
 
 
+        /// <summary>
+        /// Submission of data
+        /// Mainly used by providers to submit their data
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [Route("post")]
         [HttpPost]
         [ProviderAuthorization]
@@ -117,6 +137,7 @@ namespace InformationSystems.API.Controllers
                 var statusMessage = string.Empty;
                 var geoJson = model.Data;
 
+                // if nested GeoJSON is missing
                 if (geoJson == null)
                 {
                     statusMessage = "GeoJSON is empty or invalid";
@@ -133,6 +154,7 @@ namespace InformationSystems.API.Controllers
 
                 var acceptedTypes = new[] { "GeometryCollection", "LineString", "MultilineString", "Multipoint", "MultiPolygon", "Point", "Polygon", "Feature", "FeatureCollection" };
 
+                // if GeoJSON is of unsupported type
                 if (type == null || acceptedTypes.All(s => s.ToLower() != type.ToLower()))
                 {
                     statusMessage = "Unsupported GeoJSON type";
@@ -145,6 +167,8 @@ namespace InformationSystems.API.Controllers
                     return BadRequest(statusMessage);
                 }
 
+
+                // try to parse GeoJson, return error if failed
                 GeoJSON.Net.GeoJSONObject deserializedResult = type.ToLower() switch
                 {
                     "geometrycollection" => geoJson.ToObject<GeometryCollection>(),
@@ -159,6 +183,7 @@ namespace InformationSystems.API.Controllers
                     _ => throw new ArgumentOutOfRangeException()
                 };
 
+                // Success, provide Url Location to Query Task Progress
                 var guid = Guid.NewGuid();
                 request.SubmitSuccess = true;
                 request.InitialResponse = "Accepted";
@@ -176,8 +201,14 @@ namespace InformationSystems.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Query Specific Data submission
+        /// By guid returned
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
         [HttpGet]
-        [Route("QueryTaskProgress")]
+        [Route("QueryTaskProgress/{guid}")]
         [ProviderAuthorization]
         public async Task<IActionResult> QueryTaskProgress(string guid)
         {
@@ -196,15 +227,22 @@ namespace InformationSystems.API.Controllers
             var json = new
             {
                 DateStarted = modificationRequest.DateCreated.ToString("yyyy-MM-dd HH:mm"),
+                HasValidationConflicts = modificationRequest.HasValidationConflicts?.ToString(),
+                DateValidated = modificationRequest.DateValidated.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm"),
+                Finalized = modificationRequest.DateFinalized.HasValue,
                 DateFinished = modificationRequest.DateFinalized.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm"),
-                Finished = modificationRequest.DateFinalized.HasValue,
-                Success = modificationRequest.Approved,
-                HasValidationConflicts = modificationRequest.HasValidationConflicts ?? false
+                Published = modificationRequest.Approved ?? false
             };
 
             return Ok(json);
         }
 
+
+        /// <summary>
+        /// Returns all failed requests specific to
+        /// Authorized Company
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("failedrequests")]
         [ProviderAuthorization]
@@ -233,7 +271,7 @@ namespace InformationSystems.API.Controllers
                 .Where(mr => mr.Company.Oid == company.Oid);
 
             if (!failedRequests.Any())
-                return Ok("There are no failed requests found for your company");
+                return NoContent();
 
             foreach (var failedRequest in failedRequests)
             {

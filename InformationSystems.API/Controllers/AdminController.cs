@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DevExpress.Xpo;
-using InformationSystems.API.Models.ViewModels;
+using InformationSystems.API.Models;
 
 namespace InformationSystems.API.Controllers
 {
+    [ApiController]
     [Route("admin")]
     public class AdminController : ControllerBase
     {

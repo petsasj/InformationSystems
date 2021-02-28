@@ -121,6 +121,7 @@ namespace InformationSystems.API.Services
                             Longitude = c.Longitude
                         }).ToList();
                         break;
+                    // Not handled properly
                     case Polygon polygon:
                         geoLocations = polygon.Coordinates?.SelectMany(c => c.Coordinates).Select(c => new GeoLocation(unitOfWork)
                         {
@@ -129,6 +130,7 @@ namespace InformationSystems.API.Services
                             Longitude = c.Longitude
                         }).ToList();
                         break;
+                    // Not handled properly
                     case MultiPolygon multiPolygon:
                         geoLocations = multiPolygon.Coordinates?.SelectMany(c => c.Coordinates).SelectMany(c => c.Coordinates).Select(c => new GeoLocation(unitOfWork)
                         {
