@@ -56,7 +56,7 @@ Namely the most useful actions are:
 * Query Data Submission Outcome
 * Query All Data
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/66d6e857cb8c3c35ba77)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.postman.com/run-collection/66d6e857cb8c3c35ba77)
 
 ## Release History
 * 1.0.0
