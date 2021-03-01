@@ -11,6 +11,10 @@ using Microsoft.Extensions.Logging;
 
 namespace InformationSystems.API.Services
 {
+    /// <summary>
+    /// This CRON job is responsible for notifying providers
+    /// In case of asynchronous conflict with their modification request
+    /// </summary>
     public class NotificationCronJob : CronJobService
     {
         private readonly ILogger<NotificationCronJob> _logger;

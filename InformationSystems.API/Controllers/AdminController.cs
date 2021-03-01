@@ -12,6 +12,7 @@ namespace InformationSystems.API.Controllers
     [Route("admin")]
     public class AdminController : ControllerBase
     {
+        // Display purposes, passwords in plain sight are strictly prohibited
         private const string _authCode = "3b9084e71efa496aac6e3d1693e3889e";
         private readonly UnitOfWork _unitOfWork;
 
@@ -20,6 +21,13 @@ namespace InformationSystems.API.Controllers
             this._unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        /// This is purely for display purposes
+        /// Company creation will be done via back-end
+        /// </summary>
+        /// <param name="authCode"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [Route("addcompany")]
         [HttpPost]
         public async Task<IActionResult> AddCompany([FromHeader] string authCode, [FromBody] CompanyCreationModel model)

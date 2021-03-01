@@ -13,6 +13,11 @@ using Newtonsoft.Json.Linq;
 
 namespace InformationSystems.API.Services
 {
+    /// <summary>
+    /// CRON Job responsible for modification request insertion
+    /// Analyzes GEOJSON and inserts as entities in Database
+    /// After this step, CMS is responsible for the final approval
+    /// </summary>
     public class ModificationRequestCronJob : CronJobService
     {
         private readonly ILogger<ModificationRequestCronJob> _logger;
