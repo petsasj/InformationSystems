@@ -47,7 +47,7 @@ To get started, after cloning the git repository do the following:
 
 ## POSTMAN Collections
 
-The following POSTMAN Collection corresponds to the Web API Actions within the application FIWAREHub.Web
+The following POSTMAN Collection corresponds to the Web API Actions within the application
 
 Namely the most useful actions are:
 * Add new Company
