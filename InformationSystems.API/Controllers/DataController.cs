@@ -231,7 +231,8 @@ namespace InformationSystems.API.Controllers
                 DateValidated = modificationRequest.DateValidated.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm"),
                 Finalized = modificationRequest.DateFinalized.HasValue,
                 DateFinished = modificationRequest.DateFinalized.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm"),
-                Published = modificationRequest.Approved ?? false
+                Published = modificationRequest.Approved ?? false,
+                RejectionMessage = modificationRequest.RejectionReason
             };
 
             return Ok(json);
